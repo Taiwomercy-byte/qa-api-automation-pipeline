@@ -2,14 +2,47 @@ import requests
 
 BASE_URL = "https://jsonplaceholder.typicode.com"
 
+
 def test_get_post():
+    """Verify GET /posts/1 returns status 200 and correct post ID"""
     response = requests.get(f"{BASE_URL}/posts/1")
     assert response.status_code == 200
-    assert response.json()["id"] == 1
+    data = response.json()
+    assert data["id"] == 1
+    assert "title" in data
+
 
 def test_create_post():
-    data = {"title": "foo", "body": "bar", "userId": 1}
-    response = requests.post(f"{BASE_URL}/posts", json=data)
+    """Verify POST /posts returns status 201 and correct response"""
+    payload = {"title": "foo", "body": "bar", "userId": 1}
+    response = requests.post(f"{BASE_URL}/posts", json=payload)
     assert response.status_code == 201
-    assert response.json()["title"] == "foo"
+    data = response.json()
+    assert data["title"] == "foo"
+    assert data["body"] == "bar"
 
+
+def test_update_post():
+    """Verify PUT /posts/1 updates data correctly"""
+    payload = {"id": 1, "title": "updated", "body": "content", "userId": 1}
+    response = requests.put(f"{BASE_URL}/posts/1", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["title"] == "updated"
+    assert data["body"] == "content"
+
+
+def test_delete_post():
+    """Verify DELETE /posts/1 returns status 200"""
+    response = requests.delete(f"{BASE_URL}/posts/1")
+    assert response.status_code == 200
+
+
+def test_get_comments_by_post():
+    """Verify GET /comments?postId=1 returns comments"""
+    response = requests.get(f"{BASE_URL}/comments", params={"postId": 1})
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) > 0
+    assert "email" in data[0]
