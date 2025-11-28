@@ -1,5 +1,7 @@
 # qa-api-automation-pipeline
 
+![API Tests](https://github.com/Taiwomercy-byte/qa-api-automation-pipeline/actions/workflows/ci-tests.yml/badge.svg)
+
 # Test Plan for API Automation Project
 
 # API: https://jsonplaceholder.typicode.com
