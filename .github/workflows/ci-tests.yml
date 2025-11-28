@@ -3,20 +3,22 @@ name: API Test Automation
 on:
   push:
     branches: [ main ]
-   pull_reequest:
+  pull_request:
     branches: [ main ]
 
- jobs:
+jobs:
   test:
-    runs-on:  ubuntu-latest
-   steps:
-     - uses: actions/checkout@v3
-     - name: Set up Python
-       uses: actions/setup-python@v4
-      with:
-         python-version: '3.x'
-     - name: Install dependencies
-       run: pip install pytest requests
-     - name: Run tests
-       run: pytest tests/
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install pytest requests
+
+      - name: Run tests
+        run: pytest tests/
